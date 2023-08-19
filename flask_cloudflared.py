@@ -146,7 +146,8 @@ def _run_cloudflared(port, metrics_port, tunnel_id=None, config_path=None):
     elif tunnel_id:
         cloudflared_command += ["--url", f"http://127.0.0.1:{port}", "run", tunnel_id]
     else:
-        cloudflared_command += ["--url", f"http://127.0.0.1:{port}"]
+        print("Timeout increased")
+        cloudflared_command += ["--url", f"http://127.0.0.1:{port}", "--proxy-keepalive-timeout", "3m30s"]
 
     if system == "Darwin" and machine == "arm64":
         cloudflared = subprocess.Popen(
